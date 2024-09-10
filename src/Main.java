@@ -11,7 +11,7 @@ public class Main{
 		labirinto.exibirLabirinto();
 		
 		AgenteLabirinto agente = new AgenteLabirinto(labirinto);
-		agente.setPosicao(new PosicaoXY(0,0));
+		agente.setPosicao(new PosicaoXY(2,2));
 		labirinto.setAgente(agente);
 
 		while(agente.isAindaLimpando()) {
