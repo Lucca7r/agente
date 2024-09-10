@@ -22,56 +22,37 @@ public class AgenteLabirinto {
     }
 
     public void movimentar() {
-        // Verifica se há "A" no labirinto
         boolean existeAgua = existeAguaNoLabirinto();
         
-        // Verifica se há "A" nas células adjacentes
         PosicaoXY proximaAgua = buscarSujeiraProxima("A");
-
+    
         if (existeAgua && proximaAgua != null) {
-            // Move para a célula com "A" e limpa
             this.posXY = proximaAgua;
             this.labirinto.limpar();
             this.pilhaMovimentos++;
-        } else if (!existeAgua) {
-            // Não há "A" no labirinto, então verifica o tipo de sujeira atual
-            String tipoSujeira = verificarTipoSujeira(this.posXY);
 
-            if (tipoSujeira.equals("P")) {
-                // Se estiver sobre "P", limpa o pó
+        } 
+    
+        if (!existeAgua) {
+            PosicaoXY proximoPo = buscarSujeiraProxima("P");
+            if (proximoPo != null) {
+                this.posXY = proximoPo;
                 this.labirinto.limpar();
                 this.pilhaMovimentos++;
-            } else {
-                // Se não há sujeira, move para a próxima posição
-                this.posXY = retornarMovimento();
-                atualizarMovimento();
             }
-        } else {
-            // Move para a próxima posição se não encontrou "A" nas proximidades
-            this.posXY = retornarMovimento();
-            atualizarMovimento();
         }
     }
 
     public PosicaoXY buscarSujeiraProxima(String tipoSujeira) {
-        int x = this.posXY.getPosX();
-        int y = this.posXY.getPosY();
+        for (int i = 0; i < labirinto.getTamanhoLabirinto(); i++) {
+            for (int j = 0; j < labirinto.getTamanhoLabirinto(); j++) {
+                if (labirinto.retornarValorPosicaoLabirinto(new PosicaoXY(i, j)).equals(tipoSujeira)) {
+                    return new PosicaoXY(i, j);
+                }
+            }
+        }
+
         
-        // Verifica se há "A" nas células vizinhas (CIMA, BAIXO, ESQUERDA, DIREITA)
-        if (x > 0 && this.labirinto.retornarValorPosicaoLabirinto(new PosicaoXY(x - 1, y)).equals(tipoSujeira)) {
-            return new PosicaoXY(x - 1, y); // CIMA
-        }
-        if (x < this.labirinto.getTamanhoLabirinto() - 1 && this.labirinto.retornarValorPosicaoLabirinto(new PosicaoXY(x + 1, y)).equals(tipoSujeira)) {
-            return new PosicaoXY(x + 1, y); // BAIXO
-        }
-        if (y > 0 && this.labirinto.retornarValorPosicaoLabirinto(new PosicaoXY(x, y - 1)).equals(tipoSujeira)) {
-            return new PosicaoXY(x, y - 1); // ESQUERDA
-        }
-        if (y < this.labirinto.getTamanhoLabirinto() - 1 && this.labirinto.retornarValorPosicaoLabirinto(new PosicaoXY(x, y + 1)).equals(tipoSujeira)) {
-            return new PosicaoXY(x, y + 1); // DIREITA
-        }
-        
-        // Se não encontrou "A" nas proximidades, retorna null
         return null;
     }
 
@@ -84,23 +65,6 @@ public class AgenteLabirinto {
             }
         }
         return false;
-    }
-
-    private void atualizarMovimento() {
-        switch (movimento) {
-            case CIMA:
-                movimento = MovimentosAgenteLabirinto.BAIXO;
-                break;
-            case BAIXO:
-                movimento = MovimentosAgenteLabirinto.ESQUERDA;
-                break;
-            case ESQUERDA:
-                movimento = MovimentosAgenteLabirinto.DIREITA;
-                break;
-            case DIREITA:
-                movimento = MovimentosAgenteLabirinto.CIMA;
-                break;
-        }
     }
 
     public String verificarTipoSujeira(PosicaoXY posicao) {
