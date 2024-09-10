@@ -51,12 +51,34 @@ O projeto está organizado da seguinte forma:
 
 <br>
 
-# 🚩PAES (Percepção, Ação, Estado, Solução)
+# 🚩PPEAS (Performance, Environment, Actuators, Sensors)
 
-    - Percepção: O agente percebe o ambiente ao seu redor identificando a célula em que está localizado e verificando os tipos de sujeira ("A" para água e "P" para poeira) ao seu redor.
-    -  Ação: As ações do agente consistem em mover-se para uma célula vizinha e limpar o tipo de sujeira encontrada. As direções possíveis são cima, baixo, esquerda e direita, dependendo da validade da célula.
-    - Estado: O estado do agente é representado pela sua posição atual no labirinto e o número de movimentos realizados para limpar o ambiente. O estado do labirinto é alterado quando o agente limpa uma célula.
-    - Solução: A solução final é atingida quando todas as células com sujeira ("A" ou "P") são limpas, momento em que o agente para de se mover. O sucesso do agente é determinado pela capacidade de encontrar e limpar todas as células sujas.
+    - Performance (Desempenho):
+
+        O desempenho do agente é avaliado com base em sua capacidade de limpar todas as células do labirinto que contenham sujeira. Um agente bem-sucedido será aquele que limpar todas as células com sujeira ("A" para água e "P" para poeira) no menor número de movimentos possível e sem deixar sujeiras para trás.
+
+<br>
+    - Environment (Ambiente):
+
+        O ambiente é o labirinto, que é gerado aleatoriamente com um número fixo de células (por exemplo, 4x4). Cada célula do labirinto pode conter:
+        Água ("A"), representando sujeira líquida.
+        Poeira ("P"), representando sujeira sólida.
+        Células vazias ("L") que já foram limpas pelo agente.
+        O agente deve navegar neste ambiente, evitando obstáculos e encontrando as células sujas.
+
+<br>
+
+    - Actuators (Atuadores):
+
+        O agente usa os seguintes atuadores:
+        Movimentação: O agente se move para as células adjacentes nas quatro direções possíveis (cima, baixo, esquerda, direita).
+        Limpeza: Quando o agente chega em uma célula suja, ele usa o atuador de limpeza para remover a sujeira, transformando a célula em limpa ("L").
+<br>
+    - Sensors (Sensores):
+
+        O agente possui sensores que permitem:
+        Percepção de Sujeira: O agente pode detectar se a célula atual ou uma célula adjacente contém sujeira, seja ela água ("A") ou poeira ("P").
+        Percepção de Obstáculos: O agente pode detectar obstáculos, como paredes ou células já limpas, para evitar mover-se para locais inválidos.
 
 <br>
 
